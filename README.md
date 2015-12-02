@@ -40,15 +40,16 @@ var app = express();
 var server = http.createServer(app);
 
 var PORT = process.env.PORT || 8000;
-var init = wait(app);
+
+app.use(wait);
 
 // Insert more applicable asynchronous task here:
-setTimeout(function() {
-  app.use(function(req, res) {
-    res.send('success');
-  });
+app.use(function(req, res) {
+  res.send('success');
+});
 
-  init();
+setTimeout(function() {
+  app.set('ready', true);
 }, 10000);
 
 server.listen(PORT, function() {
